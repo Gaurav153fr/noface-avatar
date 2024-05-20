@@ -1,9 +1,10 @@
 import { makeAvatar } from "@/utils/makeAvatar";
-import { promises as fsPromises, mkdir, mkdirSync } from "fs";
+import { promises as fsPromises } from "fs";
 import { NextRequest, NextResponse } from "next/server";
 import { join } from "path";
 import { v4 as uuidv4 } from "uuid";
-import fs from 'fs'
+import fs from 'fs';
+
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
@@ -14,15 +15,15 @@ export async function POST(req: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     const uid = uuidv4();
-    const extension = getFileExtension(file.name); // Implement this function
-    const dirPath = join(process.cwd(), 'public', 'temp');
+    const extension = getFileExtension(file.name);
+    const dirPath = join('/tmp', 'temp');
 
     // Ensure the directory exists
     if (!fs.existsSync(dirPath)) {
       fs.mkdirSync(dirPath, { recursive: true });
     }
     
-    const path = join(process.cwd(), `/public/temp/${uid}.${extension}`);
+    const path = join(dirPath, `${uid}.${extension}`);
 
     await fsPromises.writeFile(path, buffer);
 
@@ -34,7 +35,7 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     console.error("Error processing the file:", error);
-    return NextResponse.json(new Error("Error processing the file."), {
+    return NextResponse.json({ error: "Error processing the file." }, {
       status: 500,
     });
   }
