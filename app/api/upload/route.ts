@@ -1,5 +1,5 @@
 import { makeAvatar } from "@/utils/makeAvatar";
-import { promises as fsPromises } from "fs";
+import { promises as fsPromises, mkdir, mkdirSync } from "fs";
 import { NextRequest, NextResponse } from "next/server";
 import { join } from "path";
 import { v4 as uuidv4 } from "uuid";
@@ -15,6 +15,7 @@ export async function POST(req: NextRequest) {
     const buffer = Buffer.from(bytes);
     const uid = uuidv4();
     const extension = getFileExtension(file.name); // Implement this function
+    mkdirSync(join(process.cwd(), `/public/temp/`));
     const path = join(process.cwd(), `/public/temp/${uid}.${extension}`);
 
     await fsPromises.writeFile(path, buffer);
@@ -23,7 +24,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       message: "File uploaded and processed successfully.",
-      id:uid
+      id: uid,
     });
   } catch (error) {
     console.error("Error processing the file:", error);
