@@ -61,7 +61,7 @@ const lookup: Lookup = {
 
 async function createCircularImage(inputPath: string, outputPath: string) {
   const { width, height } = await sharp(inputPath).metadata();
-  const size = Math.min(width, height);
+const size = Math.min(width ?? 0, height ?? 0);
 
   return sharp(inputPath)
     .resize(size, size, { fit: "cover" })
