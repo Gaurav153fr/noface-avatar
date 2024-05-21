@@ -8,14 +8,15 @@ export default function Home() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [download, setDownload] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const [imgs, setImgs] = useState<null | string[]>(null);
   const input = useRef<HTMLInputElement>(null);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files && files.length > 0) {
       const selectedFile = files[0];
-      setSelectedImage(URL.createObjectURL(selectedFile));
+      const selectImgUrl = URL.createObjectURL(selectedFile);
+      setSelectedImage(selectImgUrl);
       setDownload(null);
     }
   };
@@ -39,7 +40,11 @@ export default function Home() {
 
         if (response.ok) {
           const data = await response.json();
-          setDownload(data.id); // Assuming the server returns the URL of the processed image
+
+          console.log(data);
+setDownload("download")
+          setImgs(data.imagesUrl);
+          
         } else {
           console.error("Failed to upload image");
         }
@@ -52,13 +57,13 @@ export default function Home() {
   };
 
   return (
-    <main className="flex  flex-col gap-5  p-5 justify-center sm:w-96 w-full items-center m-auto">
+    <main className="flex gap-5  p-5 justify-center  w-full items-center m-auto max-sm:flex-col">
+      <div className="min-w-60">
       <input
         type="file"
         ref={input}
         onChange={handleChange}
         color="primary"
-       
         className="w-full h-20 p-4"
       />
       {selectedImage ? (
@@ -95,8 +100,9 @@ export default function Home() {
                 className="w-full"
                 as={Link}
                 href={`/api/download/${download}`}
+                isDisabled
               >
-                Download
+                Download zip coming soon
               </Button>
             </CardFooter>
           )}
@@ -125,6 +131,19 @@ export default function Home() {
           </CardFooter>
         </Card>
       )}
+</div>
+<div className="flex flex-wrap gap-3">
+      {imgs &&
+        imgs.map((i, index) => (
+          
+            <Card key={index} shadow="sm" className="flex grow items-center">
+              <CardBody>
+                <Image src={i} alt={`result image avatar ${index}`} width='100%' className="object-cover max-sm:object-contain h-60 w-fit m-auto " radius="none" />
+              </CardBody>
+            </Card>
+          )
+          
+        )}</div>
     </main>
   );
 }

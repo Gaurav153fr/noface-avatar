@@ -1,43 +1,38 @@
+import { lookupList } from "@/constants/action-list";
 import { makeAvatar } from "@/utils/makeAvatar";
-import { promises as fsPromises } from "fs";
+import { upload } from "@/utils/storage";
 import { NextRequest, NextResponse } from "next/server";
-import { join } from "path";
-import { v4 as uuidv4 } from "uuid";
-import fs from 'fs';
-
+import { uuid } from "uuidv4";
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
     const file = formData.get("file") as File;
-
-    // Validate file type and extension if necessary
-
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    const uid = uuidv4();
-    const extension = getFileExtension(file.name);
-    const dirPath = join('/tmp', 'temp');
-
-    // Ensure the directory exists
-    if (!fs.existsSync(dirPath)) {
-      fs.mkdirSync(dirPath, { recursive: true });
-    }
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    const uid = uuid();
+    const resultImagesBuffer = await makeAvatar(buffer);
+    //console.log(resultImagesBuffer);
+    var imagesUrl: string[] = [];
+    await Promise.all(
+      resultImagesBuffer.map(async (e, i) => {
+        if (e) {
+          const blob = new Blob([e], { type: "image/jpg" });
+          const url = await upload(`/${uid}/${lookupList[i]}`, blob);
+          imagesUrl.push(url);
+        }
+      })
+    );
     
-    const path = join(dirPath, `${uid}.${extension}`);
+    console.log(imagesUrl);
+    
 
-    await fsPromises.writeFile(path, buffer);
-
-    await makeAvatar(path, uid);
-
-    return NextResponse.json({
-      message: "File uploaded and processed successfully.",
-      id: uid,
-    });
+    return NextResponse.json({ imagesUrl });
   } catch (error) {
     console.error("Error processing the file:", error);
-    return NextResponse.json({ error: "Error processing the file." }, {
-      status: 500,
-    });
+    return NextResponse.json(
+      { error: "Error processing the file." },
+      { status: 500 }
+    );
   }
 }
 
