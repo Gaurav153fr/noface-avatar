@@ -14,6 +14,10 @@ export default function Home() {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files && files.length > 0) {
+      if (files[0].size >  5 * 1024 * 1024) {
+        alert('File size exceeds the limit of 5MB.');
+        return;
+      }
       const selectedFile = files[0];
       const selectImgUrl = URL.createObjectURL(selectedFile);
       setSelectedImage(selectImgUrl);
@@ -60,6 +64,7 @@ setDownload("download")
     <main className="flex gap-5  p-5 justify-center  w-full items-center m-auto max-sm:flex-col">
       <div className="min-w-60">
       <input
+      accept="images/*"
         type="file"
         ref={input}
         onChange={handleChange}
