@@ -26,7 +26,7 @@ function NavbarHead() {
         </NavbarItem> */}
     </NavbarContent>
     <NavbarContent justify="end">
-      <NavbarItem className="hidden lg:flex">
+      <NavbarItem className="flex">
         <Link href="https://discord.gg/p7y9CH4G" target="_blank">Discord</Link>
       </NavbarItem>
       <NavbarItem>
