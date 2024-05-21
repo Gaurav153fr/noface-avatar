@@ -1,5 +1,5 @@
 import { Button, Card, CardBody, CardFooter } from "@nextui-org/react";
-import Image from "next/image";
+import { Image } from "@nextui-org/image";
 import Link from "next/link";
 
 export default function Home() {
