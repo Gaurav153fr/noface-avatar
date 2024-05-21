@@ -64,7 +64,7 @@ setDownload("download")
     <main className="flex gap-5  p-5 justify-center  w-full items-center m-auto max-sm:flex-col">
       <div className="min-w-60">
       <input
-      accept="images/*"
+      accept="image/png, image/webp, image/jpeg, img/jpg"
         type="file"
         ref={input}
         onChange={handleChange}
