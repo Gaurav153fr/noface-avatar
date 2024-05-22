@@ -18,6 +18,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <meta property="og:image" content="/og.jpg" />
+<meta property="og:image:alt" content="faceless avatar- create yourn own avataar" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1280" />
+<meta property="og:image:height" content="720" />
       <body className={inter.className}>
         <Providers>
           <NavbarHead/>
