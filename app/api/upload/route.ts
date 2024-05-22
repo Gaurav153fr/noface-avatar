@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     const buffer = Buffer.from(arrayBuffer);
     const uid = uuid();
     const resultImagesBuffer = await makeAvatar(buffer);
-    //console.log(resultImagesBuffer);
+    console.log(resultImagesBuffer);
     var imagesUrl: string[] = [];
     await Promise.all(
       resultImagesBuffer.map(async (e, i) => {
