@@ -1,9 +1,6 @@
 import sharp from "sharp";
-import { mkdirSync } from "fs";
 import { join } from "path";
-import { upload } from "./storage";
 import { lookupList, lookupTable } from "@/constants/action-list";
-import { error } from "console";
 
 const actionDir = join(process.cwd(), "/public/actionImages");
 
@@ -95,7 +92,7 @@ async function mergeOverlayToActionImages(
           left: lookupTable[backgroundPath].position.left,
         },
       ])
-      .jpeg()
+      .png()
       .toBuffer();
    
    return processedActionImageBuffer

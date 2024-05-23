@@ -19,7 +19,7 @@ export default function Home() {
         <div className="flex  justify-center gap-5 sm:gap-10">
           <div className="w-32 h-48 sm:w-60 sm:h-96">
             <Image
-              src="/pointng-man.webp"
+              src="/static/pointng-man.webp"
               alt="Sample Avatar"
               height={900}
               width={900}
@@ -28,7 +28,7 @@ export default function Home() {
           </div>
           <div className="w-32 h-32 sm:w-60 sm:h-60">
             <Image
-              src="/output-pointing-man.jpg"
+              src="/static/output-pointing-man.jpg"
               alt="Sample Avatar"
               height={500}
               width={500}
@@ -36,18 +36,24 @@ export default function Home() {
             />
           </div>
         </div>
+       
       </main>
-      <h1 className="text-4xl sm:text-6xl font-bold mb-4 sm:mb-8 text-center   mt-10">
+      <div className="relative h-10 w-30 ">
+      <svg className="absolute -top-20 z-1 " viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,100 Q50,0 100,100 T200,100 T300,100 T400,100 T500,100 T600,100 T700,100 T800,100 T900,100 T1000,100 " fill="1" stroke="#0099ff" stroke-width="4"/>
+        </svg></div>
+      <h1 className="z-5 text-4xl sm:text-6xl font-bold mb-4 sm:mb-8 text-center   mt-10">
         20+ different Actions 💁‍♂️🐶
       </h1>
       <section
         id="example"
         className="flex gap-2 justify-center max-sm:flex-col text-center items-center w-full p-4 sm:p-8"
       >
+        
         <Card className="sm:mr-20">
           <CardBody>
           <Image
-            src="/6-profile.jpg"
+            src="/static/6-profile.jpg"
             alt="Sample Avatar"
             height={100}
             width={100}
@@ -63,7 +69,7 @@ export default function Home() {
             <CardBody>
               {" "}
               <Image
-                src="/output-man-explaining.jpg"
+                src="/static/output-man-explaining.jpg"
                 alt="Sample Avatar"
                 height={300}
                 width={300}
@@ -80,7 +86,7 @@ export default function Home() {
             <CardBody>
               {" "}
               <Image
-                src="/output-yelling-5.jpg"
+                src="/static/output-yelling-5.jpg"
                 alt="Sample Avatar"
                 height={300}
                 width={300}
@@ -99,7 +105,7 @@ export default function Home() {
           <CardBody>
             {" "}
             <Image
-              src="/output-man-idea.jpg"
+              src="/static/output-man-idea.jpg"
               alt="Sample Avatar"
               height={300}
               width={300}
