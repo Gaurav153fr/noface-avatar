@@ -19,15 +19,13 @@ const upload = async (path: string, file: Blob) => {
 
 const zipUpload = async (file: Buffer, uid: string) => {
   try {
-    const currentDate = new Date();
-    const localDateString = currentDate.toISOString();
-    const uploadRef = ref(storage, `/zip/${localDateString}.zip`);
+   
+    const uploadRef = ref(storage, `/zip/${uid}.zip`);
 
     const snapshot = await uploadBytes(uploadRef, file);
     console.log('Uploaded a zip!');
 
-    const downloadUrl = await getDownloadURL(uploadRef);
-    return downloadUrl;
+   
   } catch (error) {
     console.error('Error uploading file to path /zip:', error);
     throw new Error('File upload failed');

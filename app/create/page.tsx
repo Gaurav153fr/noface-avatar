@@ -47,7 +47,7 @@ export default function Home() {
           const data = await response.json();
 
           console.log(data);
-          setDownload(data.downloadURL);
+          setDownload(`/api/download/${data.uid}`);
           setImgs(data.imagesUrl);
         } else {
           console.error("Failed to upload image");

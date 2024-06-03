@@ -39,7 +39,7 @@ console.log("✅zip file created");
     // Upload the zip file and wait for the upload to complete
     const downloadURL =  zipUpload(zipContent, uid);
 
-    console.log(imagesUrl);
+    //console.log(imagesUrl);
 
     return NextResponse.json({ imagesUrl, uid:uid });
   } catch (error) {
