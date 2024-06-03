@@ -10,28 +10,29 @@ export async function POST(req: NextRequest) {
     const file = formData.get("file") as File;
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
-    const uid =uuid()
+    const uid = uuid();
     const resultImagesBuffer = await makeAvatar(buffer);
     const zip = new JSZip();
+    const uploadPromises: Promise<string | null>[] = []; // Array to hold individual upload promises
+
     resultImagesBuffer.forEach((image, i) => {
       if (image === null) return;
       zip.file(lookupList[i], image);
+      const promise = (async () => {
+        if (image) {
+          const blob = new Blob([image], { type: "image/png" });
+          return upload(`/${uid}/${lookupList[i]}`, blob);
+        }
+        return null;
+      })();
+      uploadPromises.push(promise);
     });
 
-    const zipContent = await zip.generateAsync({ type: "nodebuffer" });
+    // Wait for all individual image uploads to complete
+    const imagesUrl = await Promise.all(uploadPromises);
 
+    const zipContent = await zip.generateAsync({ type: "nodebuffer" });
     const downloadURL = await zipUpload(zipContent, uid);
-    
-    var imagesUrl: string[] = [];
-    await Promise.all(
-      resultImagesBuffer.map(async (e, i) => {
-        if (e) {
-          const blob = new Blob([e], { type: "image/png" });
-          const url = await upload(`/${uid}/${lookupList[i]}`, blob);
-          imagesUrl.push(url);
-        }
-      })
-    );
 
     console.log(imagesUrl);
 
@@ -44,4 +45,5 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
 
