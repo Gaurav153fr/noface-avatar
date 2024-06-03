@@ -31,12 +31,12 @@ export async function POST(req: NextRequest) {
     // Wait for all individual image uploads to complete
     const imagesUrl = await Promise.all(uploadPromises);
 
-    const zipContent = await zip.generateAsync({ type: "nodebuffer" });
-    const downloadURL = await zipUpload(zipContent, uid);
+    // const zipContent = await zip.generateAsync({ type: "nodebuffer" });
+    // const downloadURL = await zipUpload(zipContent, uid);
 
     console.log(imagesUrl);
 
-    return NextResponse.json({ imagesUrl, downloadURL });
+    return NextResponse.json({ imagesUrl, downloadURL:"/nn" });
   } catch (error) {
     console.error("Error processing the file:", error);
     return NextResponse.json(
