@@ -24,7 +24,7 @@ const zipUpload = async (file: Buffer, uid: string) => {
     const uploadRef = ref(storage, `/zip/${localDateString}.zip`);
 
     const snapshot = await uploadBytes(uploadRef, file);
-    console.log('Uploaded a blob or file!');
+    console.log('Uploaded a zip!');
 
     const downloadUrl = await getDownloadURL(uploadRef);
     return downloadUrl;
