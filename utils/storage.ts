@@ -20,7 +20,7 @@ const upload = async (path: string, file: Blob) => {
 const zipUpload = async (file: Buffer, uid: string) => {
   try {
     const currentDate = new Date();
-    const localDateString = currentDate.toISOString(); // Changed to toISOString for a cleaner format
+    const localDateString = currentDate.toISOString();
     const uploadRef = ref(storage, `/zip/${localDateString}.zip`);
 
     const snapshot = await uploadBytes(uploadRef, file);
