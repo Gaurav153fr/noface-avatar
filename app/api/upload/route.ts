@@ -4,6 +4,7 @@ import { upload, zipUpload } from "@/utils/storage";
 import JSZip from "jszip";
 import { NextRequest, NextResponse } from "next/server";
 import { uuid } from "uuidv4";
+
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
@@ -31,12 +32,15 @@ export async function POST(req: NextRequest) {
     // Wait for all individual image uploads to complete
     const imagesUrl = await Promise.all(uploadPromises);
 
-    // const zipContent = await zip.generateAsync({ type: "nodebuffer" });
-    // const downloadURL = await zipUpload(zipContent, uid);
+    // Generate the zip file asynchronously
+    const zipContent = await zip.generateAsync({ type: "nodebuffer" });
+
+    // Upload the zip file and wait for the upload to complete
+    const downloadURL = await zipUpload(zipContent, uid);
 
     console.log(imagesUrl);
 
-    return NextResponse.json({ imagesUrl, downloadURL:"/nn" });
+    return NextResponse.json({ imagesUrl, downloadURL });
   } catch (error) {
     console.error("Error processing the file:", error);
     return NextResponse.json(
@@ -45,5 +49,3 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-
-
