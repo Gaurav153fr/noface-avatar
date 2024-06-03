@@ -31,9 +31,10 @@ export async function POST(req: NextRequest) {
 
     // Wait for all individual image uploads to complete
     const imagesUrl = await Promise.all(uploadPromises);
-
+    console.log("✅ uploaded all images");
     // Generate the zip file asynchronously
     const zipContent = await zip.generateAsync({ type: "nodebuffer" });
+console.log("✅zip file created");
 
     // Upload the zip file and wait for the upload to complete
     const downloadURL =  zipUpload(zipContent, uid);
