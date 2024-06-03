@@ -44,7 +44,3 @@ export async function POST(req: NextRequest) {
   }
 }
 
-function getFileExtension(filename: string): string {
-  const parts = filename.split(".");
-  return parts[parts.length - 1].toLowerCase();
-}

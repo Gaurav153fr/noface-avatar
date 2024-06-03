@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <link rel="icon" href="fav.png" sizes="any" />
+      <link rel="icon" href="/static/fav.png" sizes="any" />
       <meta property="og:title" content="Faceless-avatar" />
       <meta property="og:description" content="Create Your Avatar! 🎨✨" />
       <meta property="og:image" content="og.jpg" />
