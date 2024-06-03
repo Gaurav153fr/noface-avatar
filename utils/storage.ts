@@ -1,39 +1,37 @@
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { app } from '../constants/firebase'
-const storage = getStorage(app)
+import { app } from '../constants/firebase';
+
+const storage = getStorage(app);
 
 const upload = async (path: string, file: Blob) => {
   try {
     const uploadRef = ref(storage, path);
-    await uploadBytes(uploadRef, file).then((snapshot) => {
-      console.log('Uploaded a blob or file!');
-    });
-    const downloadUrl = await getDownloadURL(uploadRef).then((url) => { return url })
-    return downloadUrl
+    const snapshot = await uploadBytes(uploadRef, file);
+    console.log('Uploaded a blob or file!', snapshot);
+
+    const downloadUrl = await getDownloadURL(uploadRef);
+    return downloadUrl;
   } catch (error) {
     console.error(`Error uploading file to path ${path}:`, error);
     throw new Error('File upload failed');
   }
 };
 
-
-
-
-
 const zipUpload = async (file: Buffer, uid: string) => {
   try {
     const currentDate = new Date();
-    const localDateString = currentDate.toLocaleString();
+    const localDateString = currentDate.toISOString(); // Changed to toISOString for a cleaner format
     const uploadRef = ref(storage, `/zip/${localDateString}.zip`);
 
-    await uploadBytes(uploadRef, file).then((snapshot) => {
-      console.log('Uploaded a blob or file!');
-    });
-    const downloadUrl = await getDownloadURL(uploadRef).then((url) => { return url })
+    const snapshot = await uploadBytes(uploadRef, file);
+    console.log('Uploaded a blob or file!', snapshot);
+
+    const downloadUrl = await getDownloadURL(uploadRef);
     return downloadUrl;
   } catch (error) {
-    console.error(`Error uploading file to path /zip:`, error);
+    console.error('Error uploading file to path /zip:', error);
     throw new Error('File upload failed');
   }
 };
+
 export { upload, zipUpload };

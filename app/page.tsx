@@ -38,10 +38,10 @@ export default function Home() {
         </div>
        
       </main>
-      <div className="relative h-10 w-30 ">
+      {/* <div className="relative h-10 w-30 ">
       <svg className="absolute -top-20 z-1 " viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg">
       <path d="M0,100 Q50,0 100,100 T200,100 T300,100 T400,100 T500,100 T600,100 T700,100 T800,100 T900,100 T1000,100 " fill="1" stroke="#0099ff" stroke-width="4"/>
-        </svg></div>
+        </svg></div> */}
       <h1 className="z-5 text-4xl sm:text-6xl font-bold mb-4 sm:mb-8 text-center   mt-10">
         20+ different Actions 💁‍♂️🐶
       </h1>

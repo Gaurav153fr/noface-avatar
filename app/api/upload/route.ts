@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
     const file = formData.get("file") as File;
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
-    const uid = uuid();
+    const uid =uuid()
     const resultImagesBuffer = await makeAvatar(buffer);
     const zip = new JSZip();
     resultImagesBuffer.forEach((image, i) => {
@@ -21,6 +21,7 @@ export async function POST(req: NextRequest) {
     const zipContent = await zip.generateAsync({ type: "nodebuffer" });
 
     const downloadURL = await zipUpload(zipContent, uid);
+    
     var imagesUrl: string[] = [];
     await Promise.all(
       resultImagesBuffer.map(async (e, i) => {
