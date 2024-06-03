@@ -36,11 +36,11 @@ export async function POST(req: NextRequest) {
     const zipContent = await zip.generateAsync({ type: "nodebuffer" });
 
     // Upload the zip file and wait for the upload to complete
-    const downloadURL = await zipUpload(zipContent, uid);
+    const downloadURL =  zipUpload(zipContent, uid);
 
     console.log(imagesUrl);
 
-    return NextResponse.json({ imagesUrl, downloadURL });
+    return NextResponse.json({ imagesUrl, uid:uid });
   } catch (error) {
     console.error("Error processing the file:", error);
     return NextResponse.json(
